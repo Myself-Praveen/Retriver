@@ -7,3 +7,6 @@ PyJWT
 slowapi
 pytest
 flake8
+passlib[bcrypt]
+python-dotenv
+pydantic-settings

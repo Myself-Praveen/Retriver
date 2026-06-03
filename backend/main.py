@@ -1,6 +1,21 @@
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
+from core.database import connect_to_mongo, close_mongo_connection
+from core.config import settings
+from api.auth import router as auth_router
 
-app = FastAPI(title="Retriever API")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    await connect_to_mongo()
+    yield
+    # Shutdown
+    await close_mongo_connection()
+
+app = FastAPI(title=settings.PROJECT_NAME, lifespan=lifespan)
+
+# Include routers
+app.include_router(auth_router, prefix="/api/auth", tags=["auth"])
 
 @app.get("/")
 async def root():

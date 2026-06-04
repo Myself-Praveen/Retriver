@@ -10,3 +10,6 @@ flake8
 passlib[bcrypt]
 python-dotenv
 pydantic-settings
+cloudinary
+Pillow
+httpx

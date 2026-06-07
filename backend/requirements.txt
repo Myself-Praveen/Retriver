@@ -13,3 +13,4 @@ pydantic-settings
 cloudinary
 Pillow
 httpx
+redis[hiredis]

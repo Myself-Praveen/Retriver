@@ -70,3 +70,10 @@ class ItemRepository:
             "created_at", -1
         ).limit(limit)
         return await cursor.to_list(length=limit)
+
+    async def get_by_finder_email(self, email: str, limit: int = 50) -> List[dict]:
+        """Get items reported by a specific user email."""
+        cursor = self.get_collection().find({"finder_email": email}).sort(
+            "created_at", -1
+        ).limit(limit)
+        return await cursor.to_list(length=limit)

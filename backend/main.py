@@ -7,6 +7,7 @@ from repositories.item_repository import ItemRepository
 from api.auth import router as auth_router
 from api.media import router as media_router
 from api.search import router as search_router
+from api.users import router as users_router
 
 
 @asynccontextmanager
@@ -30,6 +31,7 @@ app = FastAPI(title=settings.PROJECT_NAME, lifespan=lifespan)
 
 # Include routers
 app.include_router(auth_router, prefix="/api/auth", tags=["auth"])
+app.include_router(users_router, prefix="/api/users", tags=["users"])
 app.include_router(media_router, prefix="/api/media", tags=["media"])
 app.include_router(search_router, prefix="/api/search", tags=["search"])
 

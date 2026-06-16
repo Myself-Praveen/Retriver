@@ -3,6 +3,7 @@ import { AuthProvider } from './context/AuthContext';
 import { Layout } from './components/Layout';
 import { Feed } from './pages/Feed';
 import { ReportItem } from './pages/ReportItem';
+import { Profile } from './pages/Profile';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -14,7 +15,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Feed />} />
             <Route path="report" element={<ReportItem />} />
-            {/* Future routes will go here: /profile */}
+            <Route path="profile" element={<Profile />} />
           </Route>
         </Routes>
       </Router>

@@ -9,16 +9,18 @@ Retriever is a production-grade, highly scalable utility application designed to
 - **Automated AI Tagging**: Upload a photo, and the Gemini API automatically tags it with descriptive metadata.
 - **Geospatial & Time Search**: Find items based on exactly where and when they were lost.
 - **Premium UI/UX**: Built with React, Tailwind CSS, and Framer Motion for a native-app-like experience.
-- **Real-Time WebSockets**: Instantly chat with the finder of your lost item.
+- **Real-Time WebSockets**: Instantly chat with the finder of your lost item securely using WebSockets.
 - **Secure & Rate-Limited**: JWT authentication (restricted to `.edu` emails) and Redis-backed rate limiting.
+- **User Profiles**: Dedicated user dashboard to view, manage, and track all your reported lost or found items.
 
 ## 🏛️ Architecture
 
 Retriever follows a strict **Modular Monolith** pattern:
-- **Frontend**: React (Vite), Tailwind CSS, Shadcn/UI
+- **Frontend**: React (Vite), Tailwind CSS, Shadcn/UI, Framer Motion
 - **Backend**: FastAPI (Python) using Controller/Service/Repository pattern
 - **Database**: MongoDB (Motor Async)
 - **Caching**: Redis
+- **Real-time Engine**: FastAPI WebSockets
 - **Containerization**: Docker & Docker Compose
 - **CI/CD**: GitHub Actions
 
@@ -32,8 +34,8 @@ Retriever follows a strict **Modular Monolith** pattern:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Myself-Praveen/Retriver.git
-   cd Retriver
+   git clone https://github.com/Myself-Praveen/Retriever.git
+   cd Retriever
    ```
 
 2. Start the infrastructure (MongoDB, Redis, FastAPI, Frontend):

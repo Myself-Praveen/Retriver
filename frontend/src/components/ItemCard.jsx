@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
 import { MapPin, Calendar, Tag } from 'lucide-react';
 import { useState } from 'react';
+import { ChatModal } from './ChatModal';
 
 export const ItemCard = ({ item }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const date = new Date(item.created_at).toLocaleDateString('en-US', {
     month: 'short', day: 'numeric', year: 'numeric'
@@ -64,7 +66,20 @@ export const ItemCard = ({ item }) => {
             )
           ))}
         </div>
+        
+        <button 
+          onClick={() => setIsChatOpen(true)}
+          className="mt-4 w-full py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl text-sm font-medium transition-colors border border-white/10"
+        >
+          Chat with Finder
+        </button>
       </div>
+
+      <ChatModal 
+        isOpen={isChatOpen} 
+        onClose={() => setIsChatOpen(false)} 
+        item={item} 
+      />
     </motion.div>
   );
 };

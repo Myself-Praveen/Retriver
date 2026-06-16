@@ -8,6 +8,7 @@ from api.auth import router as auth_router
 from api.media import router as media_router
 from api.search import router as search_router
 from api.users import router as users_router
+from api.chat import router as chat_router
 
 
 @asynccontextmanager
@@ -34,6 +35,7 @@ app.include_router(auth_router, prefix="/api/auth", tags=["auth"])
 app.include_router(users_router, prefix="/api/users", tags=["users"])
 app.include_router(media_router, prefix="/api/media", tags=["media"])
 app.include_router(search_router, prefix="/api/search", tags=["search"])
+app.include_router(chat_router, prefix="/api/chat", tags=["chat"])
 
 
 @app.get("/")

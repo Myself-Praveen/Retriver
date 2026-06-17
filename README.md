@@ -6,19 +6,20 @@ Retriever is a production-grade, highly scalable utility application designed to
 
 ## ✨ Features
 
-- **Automated AI Tagging**: Upload a photo, and the Gemini API automatically tags it with descriptive metadata.
-- **Geospatial & Time Search**: Find items based on exactly where and when they were lost.
-- **Premium UI/UX**: Built with React, Tailwind CSS, and Framer Motion for a native-app-like experience.
-- **Real-Time WebSockets**: Instantly chat with the finder of your lost item securely using WebSockets.
-- **Secure & Rate-Limited**: JWT authentication (restricted to `.edu` emails) and Redis-backed rate limiting.
-- **User Profiles**: Dedicated user dashboard to view, manage, and track all your reported lost or found items.
+- **Automated AI Tagging**: Upload a photo, and the Gemini API automatically tags it with descriptive metadata (brand, color, category, detailed description).
+- **Neo-Brutalist UI**: Completely custom "Comic Cool" design system featuring thick borders, hard drop shadows, vibrant high-contrast colors, and bouncy Framer Motion animations.
+- **Interactive Map Search**: Select exact lost/found locations using interactive Leaflet maps. Features an integrated geocoding search bar powered by OpenStreetMap Nominatim API with real-time autocomplete suggestions.
+- **Real-Time Persistent Chat**: Communicate securely with finders via FastAPI WebSockets. All chat histories are instantly persisted in MongoDB and loaded on demand.
+- **Complete Item Workflow**: Owners can mark their items as "Resolved", locking the chat feature and automatically updating the public feed.
+- **Flexible Media Storage**: Supports direct local image uploads served via FastAPI `StaticFiles`, with an optional Cloudinary integration for production.
+- **User Profiles**: Dedicated dashboard to view, manage, and track all your reported lost or found items.
 
 ## 🏛️ Architecture
 
 Retriever follows a strict **Modular Monolith** pattern:
-- **Frontend**: React (Vite), Tailwind CSS, Shadcn/UI, Framer Motion
+- **Frontend**: React 19 (Vite), Tailwind CSS v4, Framer Motion, Leaflet Maps
 - **Backend**: FastAPI (Python) using Controller/Service/Repository pattern
-- **Database**: MongoDB (Motor Async)
+- **Database**: MongoDB (Motor Async) for items, users, and chat persistence
 - **Caching**: Redis
 - **Real-time Engine**: FastAPI WebSockets
 - **Containerization**: Docker & Docker Compose

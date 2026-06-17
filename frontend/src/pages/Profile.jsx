@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { ShieldCheck, User, Package } from 'lucide-react';
 import api from '../api/axios';
-import { FeedCard } from '../components/FeedCard';
+import { ItemCard } from '../components/ItemCard';
 import { SkeletonCard } from '../components/SkeletonCard';
 import { motion } from 'framer-motion';
 
@@ -83,7 +83,7 @@ export const Profile = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
               >
-                <FeedCard item={item} />
+                <ItemCard item={item} />
               </motion.div>
             ))}
           </div>

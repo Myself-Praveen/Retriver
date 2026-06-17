@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { AuthModal } from './AuthModal';
-import { Search, Plus, MapPin, LogOut } from 'lucide-react';
+import { Search, Plus, MapPin, LogOut, Star, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const Layout = () => {
@@ -10,45 +10,58 @@ export const Layout = () => {
   const [isAuthModalOpen, setAuthModalOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#08060d] text-gray-100 font-sans selection:bg-[#aa3bff]/30">
-      {/* Background ambient glow */}
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[400px] bg-[#aa3bff]/10 blur-[120px] rounded-full pointer-events-none" />
+    <div className="min-h-screen text-[var(--color-text)] font-sans relative overflow-hidden">
+      {/* Decorative Background Elements */}
+      <div className="absolute top-20 left-10 text-[var(--color-primary)] opacity-20 animate-pulse pointer-events-none">
+        <Star size={48} strokeWidth={3} className="rotate-12" />
+      </div>
+      <div className="absolute top-40 right-20 text-[var(--color-secondary)] opacity-20 animate-bounce pointer-events-none">
+        <Zap size={64} strokeWidth={3} className="-rotate-12" />
+      </div>
 
       {/* Navigation */}
-      <nav className="sticky top-0 z-40 border-b border-white/10 bg-[#08060d]/80 backdrop-blur-lg">
+      <nav className="sticky top-0 z-40 bg-[var(--color-accent)] border-b-4 border-black shadow-[0_4px_0_0_#000]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#aa3bff] to-[#c084fc] flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(170,59,255,0.4)]">
+          <div className="flex items-center justify-between h-24">
+            <Link to="/" className="flex items-center gap-3 group relative">
+              {/* Pop decoration */}
+              <Star size={24} strokeWidth={3} fill="white" className="absolute -top-3 -left-3 text-black z-10 opacity-0 group-hover:opacity-100 transition-opacity rotate-12" />
+              
+              <div className="w-14 h-14 rounded-full bg-[var(--color-secondary)] border-4 border-black flex items-center justify-center font-black text-black text-3xl shadow-[4px_4px_0_0_#000] group-hover:-translate-y-1 group-hover:shadow-[6px_6px_0_0_#000] transition-all -rotate-6">
                 R
               </div>
-              <span className="font-heading font-bold text-xl tracking-tight text-white">Retriever</span>
+              <div className="relative">
+                <span className="font-heading font-black text-4xl tracking-tight text-black drop-shadow-[3px_3px_0_#fff]">Retriever</span>
+                <span className="absolute -bottom-2 -right-6 bg-[var(--color-primary)] text-white text-[10px] font-black px-2 py-0.5 border-2 border-black rounded-lg shadow-[2px_2px_0_0_#000] rotate-12">
+                  BETA!
+                </span>
+              </div>
             </Link>
 
             <div className="flex items-center gap-4">
               {isAuthenticated ? (
                 <>
-                  <Link to="/report" className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-colors text-sm font-medium">
-                    <Plus size={16} />
-                    Report Item
+                  <Link to="/report" className="hidden sm:flex items-center gap-2 px-5 py-3 comic-button bg-[var(--color-secondary)] text-black">
+                    <Plus size={24} strokeWidth={4} />
+                    <span className="text-lg">Report Item</span>
                   </Link>
-                  <div className="flex items-center gap-3 pl-4 border-l border-white/10">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 flex items-center justify-center text-sm font-bold text-white uppercase">
+                  <div className="flex items-center gap-3 pl-4 border-l-4 border-black h-12 ml-2">
+                    <div className="w-12 h-12 rounded-full bg-[var(--color-primary)] border-4 border-black flex items-center justify-center text-xl font-black text-white shadow-[3px_3px_0_0_#000] rotate-3">
                       {user?.email?.[0] || 'U'}
                     </div>
                     <button 
                       onClick={logout}
-                      className="p-2 text-gray-400 hover:text-red-400 transition-colors"
+                      className="p-2 text-black hover:bg-black hover:text-white rounded-xl transition-colors border-2 border-transparent hover:border-black"
                       title="Log out"
                     >
-                      <LogOut size={18} />
+                      <LogOut size={28} strokeWidth={3} />
                     </button>
                   </div>
                 </>
               ) : (
                 <button
                   onClick={() => setAuthModalOpen(true)}
-                  className="px-5 py-2 rounded-full bg-[#aa3bff] hover:bg-[#912bd9] text-white font-medium text-sm transition-colors shadow-[0_0_20px_rgba(170,59,255,0.3)]"
+                  className="px-8 py-3 comic-button text-xl bg-white text-black -rotate-2 hover:rotate-0"
                 >
                   Sign In
                 </button>
@@ -59,7 +72,7 @@ export const Layout = () => {
       </nav>
 
       {/* Main Content Area */}
-      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 min-h-[calc(100vh-64px)]">
+      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 min-h-[calc(100vh-96px)]">
         <Outlet />
       </main>
 

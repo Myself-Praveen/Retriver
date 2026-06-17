@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Search, MapPin, FilterX } from 'lucide-react';
+import { Search, MapPin, FilterX, Ghost } from 'lucide-react';
 import api from '../api/axios';
 import { ItemCard } from '../components/ItemCard';
 import { SkeletonCard } from '../components/SkeletonCard';
+import { motion } from 'framer-motion';
 
 export const Feed = () => {
   const [items, setItems] = useState([]);
@@ -79,27 +80,27 @@ export const Feed = () => {
       {/* Search Header */}
       <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
         <div className="w-full md:w-1/2 relative">
-          <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+          <Search size={28} strokeWidth={3} className="absolute left-4 top-1/2 -translate-y-1/2 text-black" />
           <input 
             type="text"
-            placeholder="Search by brand, color, or description..."
+            placeholder="Search for lost keys, phones, bags..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-4 rounded-2xl glass-input text-lg shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
+            className="w-full pl-14 pr-4 py-4 comic-input text-xl font-black placeholder-black/40"
           />
         </div>
         
         <div className="flex gap-3">
           <button 
             onClick={toggleLocation}
-            className={`flex items-center gap-2 px-5 py-3 rounded-xl transition-all font-medium ${
+            className={`flex items-center gap-2 px-6 py-4 font-black text-black border-4 border-black rounded-2xl shadow-[4px_4px_0_0_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0_0_#000] transition-all text-lg ${
               useLocation 
-                ? 'bg-[#aa3bff] text-white shadow-[0_0_15px_rgba(170,59,255,0.4)] border border-[#aa3bff]' 
-                : 'bg-white/5 text-gray-300 border border-white/10 hover:bg-white/10'
+                ? 'bg-[var(--color-primary)] text-white -rotate-2' 
+                : 'bg-white hover:bg-[var(--color-surface-hover)]'
             }`}
           >
-            <MapPin size={18} />
-            {useLocation ? 'Nearby Active' : 'Find Nearby'}
+            <MapPin size={24} strokeWidth={3} />
+            {useLocation ? 'Nearby Active!' : 'Find Nearby'}
           </button>
           
           {(searchQuery || useLocation) && (
@@ -109,9 +110,9 @@ export const Feed = () => {
                 setUseLocation(false);
                 setUserLocation(null);
               }}
-              className="flex items-center gap-2 px-4 py-3 rounded-xl bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 transition-colors"
+              className="flex items-center gap-2 px-5 py-4 font-black text-white bg-black border-4 border-black rounded-2xl shadow-[4px_4px_0_0_#000] transition-all hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0_0_#000] text-lg rotate-2"
             >
-              <FilterX size={18} />
+              <FilterX size={24} strokeWidth={3} />
               Clear
             </button>
           )}
@@ -119,13 +120,17 @@ export const Feed = () => {
       </div>
 
       {locationError && (
-        <div className="text-red-400 text-sm bg-red-500/10 p-3 rounded-lg border border-red-500/20">
-          {locationError}
-        </div>
+        <motion.div 
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-black font-black text-lg bg-[var(--color-primary)] p-4 comic-panel border-black flex items-center gap-2"
+        >
+          <Ghost size={24} strokeWidth={3} /> {locationError}
+        </motion.div>
       )}
 
       {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {loading ? (
           Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)
         ) : items.length > 0 ? (
@@ -133,12 +138,20 @@ export const Feed = () => {
             <ItemCard key={item._id || item.id} item={item} />
           ))
         ) : (
-          <div className="col-span-full py-20 text-center">
-            <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-white/5 flex items-center justify-center">
-              <Search size={32} className="text-gray-500" />
-            </div>
-            <h3 className="text-xl font-bold text-white mb-2">No items found</h3>
-            <p className="text-gray-400">Try adjusting your search or location filters.</p>
+          <div className="col-span-full py-32 text-center comic-panel bg-[var(--color-accent)] relative overflow-hidden">
+            <motion.div 
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="w-32 h-32 mx-auto mb-6 rounded-full border-4 border-black bg-white flex items-center justify-center shadow-[6px_6px_0_0_#000] -rotate-6"
+            >
+              <Ghost size={64} strokeWidth={2} className="text-black" />
+            </motion.div>
+            <h3 className="text-4xl font-black text-black mb-3 uppercase tracking-wide">It's a Ghost Town!</h3>
+            <p className="text-2xl font-bold text-black/70">No items found. Try adjusting your search filters.</p>
+            
+            {/* Background decorations */}
+            <div className="absolute top-10 left-10 text-black/10 -rotate-12"><Search size={100} /></div>
+            <div className="absolute bottom-10 right-10 text-black/10 rotate-12"><MapPin size={100} /></div>
           </div>
         )}
       </div>

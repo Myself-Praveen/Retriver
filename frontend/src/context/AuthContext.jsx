@@ -30,9 +30,9 @@ export const AuthProvider = ({ children }) => {
       // In a real app, you might have an endpoint like GET /auth/me
       // For now, if we have a token, we decode it or fetch profile.
       // Since our FastAPI backend returns token details:
-      const response = await api.get('/auth/me').catch(() => null);
+      const response = await api.get('/users/me').catch(() => null);
       if (response && response.data) {
-        setUser(response.data);
+        setUser(response.data.user || response.data);
       } else {
         // Fallback or handle invalid token
         logout();
@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (email, password, full_name) => {
-    await api.post('/auth/register', { email, password, full_name });
+    await api.post('/auth/signup', { email, password, name: full_name });
     return login(email, password); // Auto login after register
   };
 

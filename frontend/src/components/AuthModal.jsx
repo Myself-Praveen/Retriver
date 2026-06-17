@@ -37,25 +37,25 @@ export const AuthModal = ({ isOpen, onClose }) => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-md p-8 overflow-hidden rounded-2xl glass-panel"
+            className="relative w-full max-w-md p-8 overflow-hidden rounded-2xl comic-panel bg-[var(--color-accent)]"
           >
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 p-2 text-gray-400 hover:text-white transition-colors rounded-full hover:bg-white/10"
+              className="absolute top-4 right-4 p-2 text-black hover:bg-black/10 transition-colors rounded-full border-2 border-transparent hover:border-black"
             >
-              <X size={20} />
+              <X size={24} strokeWidth={3} />
             </button>
 
-            <div className="mb-8 text-center">
-              <h2 className="text-2xl font-bold text-white mb-2">
-                {isLogin ? 'Welcome Back' : 'Join Retriever'}
+            <div className="mb-8 text-center mt-2">
+              <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
+                {isLogin ? 'Welcome Back!' : 'Join Retriever!'}
               </h2>
-              <p className="text-gray-400 text-sm">
+              <p className="text-black/70 font-bold">
                 {isLogin 
                   ? 'Sign in to report or claim lost items.' 
                   : 'Use your .edu email to verify your campus identity.'}
@@ -66,9 +66,9 @@ export const AuthModal = ({ isOpen, onClose }) => {
               <motion.div 
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
-                className="flex items-center gap-2 p-3 mb-6 text-sm text-red-200 bg-red-500/20 border border-red-500/30 rounded-lg"
+                className="flex items-center gap-2 p-3 mb-6 text-sm font-bold text-black bg-[var(--color-primary)] border-4 border-black rounded-xl shadow-[2px_2px_0_0_#000]"
               >
-                <AlertCircle size={16} className="shrink-0" />
+                <AlertCircle size={20} strokeWidth={3} className="shrink-0" />
                 <p>{error}</p>
               </motion.div>
             )}
@@ -76,32 +76,32 @@ export const AuthModal = ({ isOpen, onClose }) => {
             <form onSubmit={handleSubmit} className="space-y-4">
               {!isLogin && (
                 <div className="relative">
-                  <User size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <User size={20} strokeWidth={3} className="absolute left-4 top-1/2 -translate-y-1/2 text-black" />
                   <input
                     type="text"
                     placeholder="Full Name"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     required
-                    className="w-full pl-10 pr-4 py-3 rounded-xl glass-input"
+                    className="w-full pl-12 pr-4 py-3 comic-input font-bold placeholder-black/50 text-lg"
                   />
                 </div>
               )}
               
               <div className="relative">
-                <Mail size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Mail size={20} strokeWidth={3} className="absolute left-4 top-1/2 -translate-y-1/2 text-black" />
                 <input
                   type="email"
                   placeholder="College Email (.edu)"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full pl-10 pr-4 py-3 rounded-xl glass-input"
+                  className="w-full pl-12 pr-4 py-3 comic-input font-bold placeholder-black/50 text-lg"
                 />
               </div>
 
               <div className="relative">
-                <Lock size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Lock size={20} strokeWidth={3} className="absolute left-4 top-1/2 -translate-y-1/2 text-black" />
                 <input
                   type="password"
                   placeholder="Password"
@@ -109,23 +109,23 @@ export const AuthModal = ({ isOpen, onClose }) => {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   minLength={8}
-                  className="w-full pl-10 pr-4 py-3 rounded-xl glass-input"
+                  className="w-full pl-12 pr-4 py-3 comic-input font-bold placeholder-black/50 text-lg"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 mt-4 font-semibold text-white bg-[#aa3bff] hover:bg-[#912bd9] rounded-xl transition-colors flex justify-center items-center gap-2 disabled:opacity-70"
+                className="w-full py-4 mt-6 font-black text-white text-xl comic-button bg-[var(--color-primary)] disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <motion.div
                     animate={{ rotate: 360 }}
                     transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-                    className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+                    className="w-6 h-6 border-4 border-black/30 border-t-black rounded-full mx-auto"
                   />
                 ) : (
-                  isLogin ? 'Sign In' : 'Create Account'
+                  isLogin ? "LET'S GO!" : 'CREATE ACCOUNT!'
                 )}
               </button>
             </form>
@@ -137,7 +137,7 @@ export const AuthModal = ({ isOpen, onClose }) => {
                   setIsLogin(!isLogin);
                   setError('');
                 }}
-                className="text-sm text-gray-400 hover:text-white transition-colors"
+                className="text-black font-bold hover:underline decoration-4 underline-offset-4 transition-all"
               >
                 {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
               </button>

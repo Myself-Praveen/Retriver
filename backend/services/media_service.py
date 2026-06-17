@@ -1,4 +1,6 @@
 import io
+import os
+import uuid
 import cloudinary
 import cloudinary.uploader
 from PIL import Image
@@ -22,18 +24,25 @@ class MediaService:
 
     @staticmethod
     async def upload_image(file: UploadFile) -> str:
-        """Uploads image to Cloudinary and returns the secure URL."""
+        """Uploads image to Cloudinary or falls back to local storage."""
         file_bytes = await file.read()
         
         # Compress before upload
         compressed_bytes = MediaService.compress_image(file_bytes)
         
-        if not settings.CLOUDINARY_URL:
-            # Mock URL for local development if no key provided
-            return "https://mock-image-url.com/placeholder.jpg"
+        if settings.CLOUDINARY_URL:
+            result = cloudinary.uploader.upload(
+                compressed_bytes,
+                folder="retriever_items"
+            )
+            return result.get("secure_url")
             
-        result = cloudinary.uploader.upload(
-            compressed_bytes,
-            folder="retriever_items"
-        )
-        return result.get("secure_url")
+        # Local storage fallback
+        os.makedirs("uploads", exist_ok=True)
+        filename = f"{uuid.uuid4()}.jpg"
+        filepath = os.path.join("uploads", filename)
+        
+        with open(filepath, "wb") as f:
+            f.write(compressed_bytes)
+            
+        return f"http://localhost:8000/uploads/{filename}"

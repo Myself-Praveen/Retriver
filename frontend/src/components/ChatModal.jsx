@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, MessageCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import api from '../api/axios';
 
 export const ChatModal = ({ isOpen, onClose, item }) => {
   const { user } = useAuth();
@@ -12,8 +13,16 @@ export const ChatModal = ({ isOpen, onClose, item }) => {
 
   useEffect(() => {
     if (isOpen && item) {
+      const itemId = item._id || item.id;
+      // Fetch history
+      api.get(`/chat/${itemId}/history`)
+        .then(res => {
+          setMessages(res.data);
+        })
+        .catch(err => console.error("Failed to fetch history:", err));
+
       // Connect to WebSocket
-      const wsUrl = `ws://localhost:8000/api/chat/ws/${item._id || item.id}`;
+      const wsUrl = `ws://localhost:8000/api/chat/ws/${itemId}`;
       ws.current = new WebSocket(wsUrl);
       
       ws.current.onmessage = (event) => {
@@ -55,33 +64,33 @@ export const ChatModal = ({ isOpen, onClose, item }) => {
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-md h-[500px] flex flex-col overflow-hidden rounded-2xl glass-panel"
+            className="relative w-full max-w-md h-[500px] flex flex-col overflow-hidden comic-panel bg-white rotate-1"
           >
             {/* Header */}
-            <div className="p-4 border-b border-white/10 flex items-center justify-between bg-white/5">
+            <div className="p-4 border-b-4 border-black flex items-center justify-between bg-[var(--color-primary)]">
               <div className="flex items-center gap-2">
-                <MessageCircle size={20} className="text-[#aa3bff]" />
-                <h3 className="font-bold text-white">Chat about {item?.title}</h3>
+                <MessageCircle size={24} strokeWidth={3} className="text-black" />
+                <h3 className="font-black text-black text-xl uppercase shadow-black drop-shadow-[2px_2px_0_#fff]">Chat: {item?.title}</h3>
               </div>
-              <button onClick={onClose} className="p-2 text-gray-400 hover:text-white transition-colors rounded-full hover:bg-white/10">
-                <X size={20} />
+              <button onClick={onClose} className="p-2 text-black hover:text-white hover:bg-black transition-colors rounded-xl border-2 border-transparent hover:border-black">
+                <X size={24} strokeWidth={3} />
               </button>
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <div className="flex-1 overflow-y-auto p-4 space-y-6 bg-[#f0f0f0]">
               {messages.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-gray-500">
-                  <MessageCircle size={40} className="mb-2 opacity-50" />
-                  <p>No messages yet. Say hello!</p>
+                <div className="h-full flex flex-col items-center justify-center text-black/40">
+                  <MessageCircle size={48} strokeWidth={2} className="mb-4" />
+                  <p className="font-black text-lg">No messages yet. Say hello!</p>
                 </div>
               ) : (
                 messages.map((msg, idx) => {
                   const isMe = msg.sender === user?.name;
                   return (
                     <div key={idx} className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
-                      <span className="text-xs text-gray-500 mb-1 px-1">{msg.sender}</span>
-                      <div className={`px-4 py-2 rounded-2xl max-w-[80%] ${isMe ? 'bg-[#aa3bff] text-white rounded-tr-none' : 'bg-white/10 text-gray-200 rounded-tl-none'}`}>
+                      <span className="text-sm font-bold text-black/50 mb-1 px-1">{msg.sender}</span>
+                      <div className={`px-4 py-3 border-4 border-black shadow-[4px_4px_0_0_#000] max-w-[80%] font-bold text-black text-md ${isMe ? 'bg-[var(--color-secondary)] rounded-2xl rounded-tr-none' : 'bg-[var(--color-accent)] rounded-2xl rounded-tl-none'}`}>
                         {msg.text}
                       </div>
                     </div>
@@ -92,20 +101,20 @@ export const ChatModal = ({ isOpen, onClose, item }) => {
             </div>
 
             {/* Input Area */}
-            <form onSubmit={sendMessage} className="p-4 border-t border-white/10 bg-white/5 flex gap-2">
+            <form onSubmit={sendMessage} className="p-4 border-t-4 border-black bg-white flex gap-3">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Type a message..."
-                className="flex-1 px-4 py-2 rounded-xl glass-input"
+                className="flex-1 px-4 py-3 comic-input font-bold text-black"
               />
               <button 
                 type="submit"
                 disabled={!input.trim()}
-                className="p-3 bg-[#aa3bff] hover:bg-[#912bd9] text-white rounded-xl transition-colors disabled:opacity-50"
+                className="px-6 py-3 comic-button bg-[var(--color-primary)] text-white flex items-center justify-center hover:bg-black disabled:opacity-50"
               >
-                <Send size={18} />
+                <Send size={24} strokeWidth={3} />
               </button>
             </form>
           </motion.div>

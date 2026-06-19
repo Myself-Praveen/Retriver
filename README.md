@@ -31,10 +31,10 @@ Retriever employs a Modular Monolith architecture, guaranteeing a strict separat
 
 ```mermaid
 graph TD
-    classDef client fill:#f9f9f9,stroke:#333,stroke-width:2px;
-    classDef backend fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
-    classDef database fill:#e8f5e9,stroke:#388e3c,stroke-width:2px;
-    classDef external fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
+    classDef client fill:#f9f9f9,stroke:#333,stroke-width:2px,color:#000;
+    classDef backend fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#000;
+    classDef database fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#000;
+    classDef external fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#000;
 
     Client[React Web Client]:::client
     

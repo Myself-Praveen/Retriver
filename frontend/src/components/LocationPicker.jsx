@@ -156,13 +156,13 @@ export const LocationPicker = ({ location, setLocation }) => {
               }
             }}
             placeholder="Search for a location..."
-            className="flex-1 px-4 py-2 bg-white border-4 border-black rounded-xl shadow-[4px_4px_0_0_#000] font-bold focus:outline-none focus:translate-y-[-2px] focus:translate-x-[-2px] focus:shadow-[6px_6px_0_0_#000] transition-all"
+            className="flex-1 px-4 py-2 bg-[var(--color-surface)] border-4 border-[var(--color-border)] rounded-xl shadow-[4px_4px_0_0_var(--color-shadow)] font-bold focus:outline-none focus:translate-y-[-2px] focus:translate-x-[-2px] focus:shadow-[6px_6px_0_0_var(--color-shadow)] transition-all"
           />
           <button 
             type="button"
             onClick={handleSearch}
             disabled={isSearching}
-            className="px-4 py-2 bg-[var(--color-primary)] text-white border-4 border-black rounded-xl shadow-[4px_4px_0_0_#000] font-black hover:translate-y-[-2px] hover:translate-x-[-2px] hover:shadow-[6px_6px_0_0_#000] transition-all disabled:opacity-70 flex items-center justify-center"
+            className="px-4 py-2 bg-[var(--color-primary)] text-white border-4 border-[var(--color-border)] rounded-xl shadow-[4px_4px_0_0_var(--color-shadow)] font-black hover:translate-y-[-2px] hover:translate-x-[-2px] hover:shadow-[6px_6px_0_0_var(--color-shadow)] transition-all disabled:opacity-70 flex items-center justify-center"
           >
             <Search size={20} strokeWidth={3} />
           </button>
@@ -170,15 +170,15 @@ export const LocationPicker = ({ location, setLocation }) => {
 
         {/* Autocomplete Dropdown */}
         {showSuggestions && suggestions.length > 0 && (
-          <div className="bg-white border-4 border-black rounded-xl shadow-[4px_4px_0_0_#000] overflow-hidden flex flex-col mt-1 max-h-48 overflow-y-auto">
+          <div className="bg-[var(--color-surface)] border-4 border-[var(--color-border)] rounded-xl shadow-[4px_4px_0_0_var(--color-shadow)] overflow-hidden flex flex-col mt-1 max-h-48 overflow-y-auto">
             {suggestions.map((result, idx) => (
               <button
                 key={result.place_id || idx}
                 type="button"
                 onClick={() => selectSuggestion(result)}
-                className="text-left px-4 py-3 hover:bg-[var(--color-surface-hover)] border-b-2 border-black/10 last:border-0 font-bold text-sm flex items-start gap-3 transition-colors"
+                className="text-left px-4 py-3 hover:bg-[var(--color-surface-hover)] border-b-2 border-[var(--color-border)]/10 last:border-0 font-bold text-sm flex items-start gap-3 transition-colors"
               >
-                <Map size={16} className="mt-0.5 shrink-0 text-black/40" />
+                <Map size={16} className="mt-0.5 shrink-0 text-[var(--color-text)]/40" />
                 <span className="line-clamp-2 leading-tight">{result.display_name}</span>
               </button>
             ))}
@@ -186,9 +186,9 @@ export const LocationPicker = ({ location, setLocation }) => {
         )}
       </div>
 
-      <div className="absolute bottom-4 left-4 z-[400] bg-[var(--color-secondary)] px-4 py-2 rounded-xl border-4 border-black flex items-center gap-2 pointer-events-none shadow-[2px_2px_0_0_#000] -rotate-2">
-        <MapPin size={20} strokeWidth={3} className="text-black" />
-        <span className="text-sm font-black text-black">Drag pin or click map</span>
+      <div className="absolute bottom-4 left-4 z-[400] bg-[var(--color-secondary)] px-4 py-2 rounded-xl border-4 border-[var(--color-border)] flex items-center gap-2 pointer-events-none shadow-[2px_2px_0_0_var(--color-shadow)] -rotate-2">
+        <MapPin size={20} strokeWidth={3} className="text-[var(--color-text)]" />
+        <span className="text-sm font-black text-[var(--color-text)]">Drag pin or click map</span>
       </div>
 
       <MapContainer 

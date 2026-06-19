@@ -36,7 +36,20 @@ app = FastAPI(title=settings.PROJECT_NAME, lifespan=lifespan)
 
 # Ensure local uploads directory exists and mount it
 os.makedirs("uploads", exist_ok=True)
-app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+
+# Custom StaticFiles to add CORS headers
+class CORSStaticFiles(StaticFiles):
+    def is_not_modified(self, response_headers, req_headers):
+        return False
+        
+    async def get_response(self, path: str, scope):
+        response = await super().get_response(path, scope)
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        response.headers["Access-Control-Allow-Methods"] = "GET, OPTIONS"
+        response.headers["Access-Control-Allow-Headers"] = "*"
+        return response
+
+app.mount("/uploads", CORSStaticFiles(directory="uploads"), name="uploads")
 
 # Configure CORS
 app.add_middleware(

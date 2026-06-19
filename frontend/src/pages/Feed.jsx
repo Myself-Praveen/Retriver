@@ -80,7 +80,7 @@ export const Feed = () => {
       {/* Search Header */}
       <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
         <div className="w-full md:w-1/2 relative">
-          <Search size={28} strokeWidth={3} className="absolute left-4 top-1/2 -translate-y-1/2 text-black" />
+          <Search size={28} strokeWidth={3} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-text)]" />
           <input 
             type="text"
             placeholder="Search for lost keys, phones, bags..."
@@ -93,10 +93,10 @@ export const Feed = () => {
         <div className="flex gap-3">
           <button 
             onClick={toggleLocation}
-            className={`flex items-center gap-2 px-6 py-4 font-black text-black border-4 border-black rounded-2xl shadow-[4px_4px_0_0_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0_0_#000] transition-all text-lg ${
+            className={`flex items-center gap-2 px-6 py-4 font-black text-[var(--color-text)] border-4 border-[var(--color-border)] rounded-2xl shadow-[4px_4px_0_0_var(--color-shadow)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0_0_var(--color-shadow)] transition-all text-lg ${
               useLocation 
                 ? 'bg-[var(--color-primary)] text-white -rotate-2' 
-                : 'bg-white hover:bg-[var(--color-surface-hover)]'
+                : 'bg-[var(--color-surface)] hover:bg-[var(--color-surface-hover)]'
             }`}
           >
             <MapPin size={24} strokeWidth={3} />
@@ -110,7 +110,7 @@ export const Feed = () => {
                 setUseLocation(false);
                 setUserLocation(null);
               }}
-              className="flex items-center gap-2 px-5 py-4 font-black text-white bg-black border-4 border-black rounded-2xl shadow-[4px_4px_0_0_#000] transition-all hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0_0_#000] text-lg rotate-2"
+              className="flex items-center gap-2 px-5 py-4 font-black text-white bg-black border-4 border-[var(--color-border)] rounded-2xl shadow-[4px_4px_0_0_var(--color-shadow)] transition-all hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0_0_var(--color-shadow)] text-lg rotate-2"
             >
               <FilterX size={24} strokeWidth={3} />
               Clear
@@ -123,7 +123,7 @@ export const Feed = () => {
         <motion.div 
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-black font-black text-lg bg-[var(--color-primary)] p-4 comic-panel border-black flex items-center gap-2"
+          className="text-[var(--color-text)] font-black text-lg bg-[var(--color-primary)] p-4 comic-panel border-[var(--color-border)] flex items-center gap-2"
         >
           <Ghost size={24} strokeWidth={3} /> {locationError}
         </motion.div>
@@ -142,16 +142,16 @@ export const Feed = () => {
             <motion.div 
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="w-32 h-32 mx-auto mb-6 rounded-full border-4 border-black bg-white flex items-center justify-center shadow-[6px_6px_0_0_#000] -rotate-6"
+              className="w-32 h-32 mx-auto mb-6 rounded-full border-4 border-[var(--color-border)] bg-[var(--color-surface)] flex items-center justify-center shadow-[6px_6px_0_0_var(--color-shadow)] -rotate-6"
             >
-              <Ghost size={64} strokeWidth={2} className="text-black" />
+              <Ghost size={64} strokeWidth={2} className="text-[var(--color-text)]" />
             </motion.div>
-            <h3 className="text-4xl font-black text-black mb-3 uppercase tracking-wide">It's a Ghost Town!</h3>
-            <p className="text-2xl font-bold text-black/70">No items found. Try adjusting your search filters.</p>
+            <h3 className="text-4xl font-black text-[var(--color-text)] mb-3 uppercase tracking-wide">It's a Ghost Town!</h3>
+            <p className="text-2xl font-bold text-[var(--color-text)]/70">No items found. Try adjusting your search filters.</p>
             
             {/* Background decorations */}
-            <div className="absolute top-10 left-10 text-black/10 -rotate-12"><Search size={100} /></div>
-            <div className="absolute bottom-10 right-10 text-black/10 rotate-12"><MapPin size={100} /></div>
+            <div className="absolute top-10 left-10 text-[var(--color-text)]/10 -rotate-12"><Search size={100} /></div>
+            <div className="absolute bottom-10 right-10 text-[var(--color-text)]/10 rotate-12"><MapPin size={100} /></div>
           </div>
         )}
       </div>

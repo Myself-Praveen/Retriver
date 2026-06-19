@@ -1,37 +1,158 @@
-# Retriever 🐕
+# Retriever
 
-> An AI-powered campus lost & found platform built with FastAPI, React, and Gemini Vision for automated visual tagging.
+[![React](https://img.shields.io/badge/React-19-blue.svg)](https://reactjs.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.111+-009688.svg)](https://fastapi.tiangolo.com/)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB.svg)](https://www.python.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248.svg)](https://www.mongodb.com/)
+[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED.svg)](https://www.docker.com/)
 
-Retriever is a production-grade, highly scalable utility application designed to solve the "Lost and Found" problem on college campuses. By utilizing computer vision (Google Gemini API), Retriever automatically extracts metadata (color, brand, category) from uploaded images, creating a seamless, intelligent search experience.
+An intelligent campus lost and found management system utilizing Computer Vision and Large Language Models for automated metadata extraction and indexing.
 
-## ✨ Features
+Retriever streamlines the recovery of lost items by automatically processing user-uploaded images through the Google Gemini Vision API to extract descriptive tags (color, brand, category). This data is seamlessly indexed to provide a highly accurate, map-integrated search experience.
 
-- **Automated AI Tagging**: Upload a photo, and the Gemini API automatically tags it with descriptive metadata (brand, color, category, detailed description).
-- **Neo-Brutalist UI**: Completely custom "Comic Cool" design system featuring thick borders, hard drop shadows, vibrant high-contrast colors, and bouncy Framer Motion animations.
-- **Interactive Map Search**: Select exact lost/found locations using interactive Leaflet maps. Features an integrated geocoding search bar powered by OpenStreetMap Nominatim API with real-time autocomplete suggestions.
-- **Real-Time Persistent Chat**: Communicate securely with finders via FastAPI WebSockets. All chat histories are instantly persisted in MongoDB and loaded on demand.
-- **Complete Item Workflow**: Owners can mark their items as "Resolved", locking the chat feature and automatically updating the public feed.
-- **Flexible Media Storage**: Supports direct local image uploads served via FastAPI `StaticFiles`, with an optional Cloudinary integration for production.
-- **User Profiles**: Dedicated dashboard to view, manage, and track all your reported lost or found items.
+---
 
-## 🏛️ Architecture
+## Capabilities
 
-Retriever follows a strict **Modular Monolith** pattern:
-- **Frontend**: React 19 (Vite), Tailwind CSS v4, Framer Motion, Leaflet Maps
-- **Backend**: FastAPI (Python) using Controller/Service/Repository pattern
-- **Database**: MongoDB (Motor Async) for items, users, and chat persistence
-- **Caching**: Redis
-- **Real-time Engine**: FastAPI WebSockets
-- **Containerization**: Docker & Docker Compose
-- **CI/CD**: GitHub Actions
+- **Automated Metadata Extraction**: Leverages the Google Gemini Vision API to automatically identify and tag uploaded items with attributes such as brand, primary color, and category.
+- **Real-Time Communication**: Integrates an asynchronous WebSocket chat system, enabling direct, persistent, and secure messaging between finders and owners.
+- **Geospatial Tracking**: Utilizes interactive Leaflet maps combined with the OpenStreetMap Nominatim API for precise coordinate plotting and geocoding.
+- **Automated Document Generation**: Dynamically generates high-resolution, printable "WANTED" flyers for lost items, complete with scannable QR codes for quick system access.
+- **Scalable Media Storage**: Implements Cloudinary for secure, production-grade Content Delivery Network (CDN) image storage, featuring intelligent fallback to local static file serving.
+- **Workflow State Management**: Supports full item lifecycle management, allowing users to transition items to a "Resolved" state, which automatically archives associated chat sessions.
 
-## 🚀 Getting Started
+---
+
+## Architecture Design
+
+Retriever employs a Modular Monolith architecture, guaranteeing a strict separation of concerns through the Controller-Service-Repository pattern while minimizing operational complexity.
+
+### High-Level System Architecture
+
+```mermaid
+graph TD
+    classDef client fill:#f9f9f9,stroke:#333,stroke-width:2px;
+    classDef backend fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
+    classDef database fill:#e8f5e9,stroke:#388e3c,stroke-width:2px;
+    classDef external fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
+
+    Client[React Web Client]:::client
+    
+    subgraph Core Backend
+        API[FastAPI Server]:::backend
+        WS[WebSocket Manager]:::backend
+    end
+    
+    subgraph Data Persistence
+        DB[(MongoDB)]:::database
+        Cache[(Redis Cache)]:::database
+    end
+    
+    subgraph External Services
+        Gemini[Google Gemini Vision]:::external
+        CDN[Cloudinary CDN]:::external
+        OSM[OpenStreetMap]:::external
+    end
+
+    Client -- REST / HTTPS --> API
+    Client -- ws:// --> WS
+    Client -- Fetch Tiles --> OSM
+    
+    API -- Motor / Async --> DB
+    WS -- Pub/Sub --> Cache
+    WS -- Persist Logs --> DB
+    
+    API -- Upload Stream --> CDN
+    API -- Image URL + Prompt --> Gemini
+    
+    Client -- Fetch Assets --> CDN
+```
+
+### Automated Vision Pipeline
+
+The following sequence details the intelligent tagging workflow triggered upon item submission:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Client
+    participant API as FastAPI Gateway
+    participant CDN as Cloudinary
+    participant LLM as Gemini AI Model
+    participant DB as MongoDB
+
+    Client->>API: POST /api/items/ (Multipart Form-Data)
+    activate API
+    
+    API->>CDN: Stream Image Blob
+    activate CDN
+    CDN-->>API: Return Secure Delivery URL
+    deactivate CDN
+    
+    API->>LLM: Transmit Image URL + Extraction Prompt
+    activate LLM
+    LLM-->>API: Return Structured JSON (Brand, Color, Category)
+    deactivate LLM
+    
+    API->>DB: Insert Document (Item Data + AI Tags)
+    activate DB
+    DB-->>API: Acknowledge Insertion
+    deactivate DB
+    
+    API-->>Client: 201 Created (Item Details Payload)
+    deactivate API
+```
+
+### Real-Time WebSocket Infrastructure
+
+The chat architecture guarantees immediate message delivery while ensuring robust historical persistence.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Finder
+    participant Owner
+    participant API as Connection Manager
+    participant Cache as Redis
+    participant DB as MongoDB
+
+    Finder->>API: Establish connection (wss://.../chat/{id})
+    Owner->>API: Establish connection (wss://.../chat/{id})
+    
+    Finder->>API: Transmit Message Payload
+    activate API
+    
+    par Real-Time Broadcast
+        API->>Owner: Push Message Payload to Active Socket
+    and Distributed Pub/Sub
+        API->>Cache: Publish to Room Channel
+    and Persistent Storage
+        API->>DB: Asynchronously insert chat record
+    end
+    
+    deactivate API
+```
+
+---
+
+## Technical Stack
+
+- **Client Infrastructure**: React 19, Vite, Tailwind CSS v4, Framer Motion, React-Leaflet
+- **Application Server**: FastAPI, Pydantic, Uvicorn (ASGI)
+- **Data Layer**: MongoDB (Motor Async Driver), Upstash Redis
+- **Integrations**: Google Gemini 1.5 Flash, Cloudinary SDK, OpenStreetMap
+- **DevOps**: Docker, Docker Compose, GitHub Actions (CI/CD)
+
+---
+
+## Getting Started
 
 ### Prerequisites
-- Docker & Docker Compose installed on your machine.
-- A Gemini API Key from Google AI Studio.
+- Docker and Docker Compose
+- Node.js environment (optional, for local client debugging)
+- Google AI Studio API Key (Gemini)
 
-### Local Development (Docker)
+### Local Deployment (Dockerized)
 
 1. Clone the repository:
    ```bash
@@ -39,14 +160,24 @@ Retriever follows a strict **Modular Monolith** pattern:
    cd Retriever
    ```
 
-2. Start the infrastructure (MongoDB, Redis, FastAPI, Frontend):
+2. Establish the environment configuration in `backend/.env`:
+   ```env
+   MONGO_URL=mongodb://mongodb:27017
+   GEMINI_API_KEY=your_google_ai_key
+   REDIS_URL=redis://redis:6379
+   JWT_SECRET=super_secret_key
+   ```
+
+3. Initialize the containers:
    ```bash
    docker-compose up --build
    ```
 
-3. Access the application:
-   - Frontend: `http://localhost:5173`
-   - Backend API Docs (Swagger): `http://localhost:8000/docs`
+4. Validate the deployment:
+   - Client Application: `http://localhost:5173`
+   - API Documentation (OpenAPI/Swagger): `http://localhost:8000/docs`
 
-## 🤝 Contributing
-Contributions are welcome. Please ensure that you run `pytest` and `flake8` before submitting a pull request. This repository uses GitHub Actions for continuous integration.
+---
+
+## Contributing
+We enforce rigorous code quality standards. Ensure all local tests pass by executing `pytest` and `flake8` prior to submitting a Pull Request. Continuous Integration pipelines will automatically reject non-compliant submissions.

@@ -41,15 +41,15 @@ export const ImageDropzone = ({ file, setFile }) => {
           className={`flex flex-col items-center justify-center w-full h-64 border-4 border-dashed rounded-2xl cursor-pointer transition-all ${
             isDragging 
               ? 'border-[var(--color-primary)] bg-[var(--color-primary)]/20 scale-105' 
-              : 'border-black bg-white hover:bg-[var(--color-surface-hover)] shadow-[4px_4px_0_0_#000] hover:shadow-[6px_6px_0_0_#000] hover:-translate-y-1'
+              : 'border-[var(--color-border)] bg-[var(--color-surface)] hover:bg-[var(--color-surface-hover)] shadow-[4px_4px_0_0_var(--color-shadow)] hover:shadow-[6px_6px_0_0_var(--color-shadow)] hover:-translate-y-1'
           }`}
         >
           <div className="flex flex-col items-center justify-center pt-5 pb-6">
-            <UploadCloud size={64} strokeWidth={3} className={`mb-4 ${isDragging ? 'text-[var(--color-primary)] animate-bounce' : 'text-black'}`} />
-            <p className="mb-2 text-lg text-black font-medium">
+            <UploadCloud size={64} strokeWidth={3} className={`mb-4 ${isDragging ? 'text-[var(--color-primary)] animate-bounce' : 'text-[var(--color-text)]'}`} />
+            <p className="mb-2 text-lg text-[var(--color-text)] font-medium">
               <span className="font-black">Click to upload</span> or drag and drop
             </p>
-            <p className="text-sm font-bold text-black/60 bg-[var(--color-accent)] px-3 py-1 rounded-full border-2 border-black rotate-2">PNG, JPG or WEBP</p>
+            <p className="text-sm font-bold text-[var(--color-text)]/60 bg-[var(--color-accent)] px-3 py-1 rounded-full border-2 border-[var(--color-border)] rotate-2">PNG, JPG or WEBP</p>
           </div>
           <input 
             type="file" 
@@ -59,7 +59,7 @@ export const ImageDropzone = ({ file, setFile }) => {
           />
         </label>
       ) : (
-        <div className="relative w-full h-64 rounded-2xl overflow-hidden comic-panel border-4 border-black group">
+        <div className="relative w-full h-64 rounded-2xl overflow-hidden comic-panel border-4 border-[var(--color-border)] group">
           <img 
             src={URL.createObjectURL(file)} 
             alt="Preview" 
@@ -69,7 +69,7 @@ export const ImageDropzone = ({ file, setFile }) => {
             <button
               type="button"
               onClick={() => setFile(null)}
-              className="px-6 py-3 comic-button bg-white text-black text-lg flex items-center gap-2 hover:bg-black hover:text-white"
+              className="px-6 py-3 comic-button bg-[var(--color-surface)] text-[var(--color-text)] text-lg flex items-center gap-2 hover:bg-black hover:text-white"
             >
               <X size={24} strokeWidth={3} />
               Remove Image

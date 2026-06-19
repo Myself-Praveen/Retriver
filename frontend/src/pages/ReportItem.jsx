@@ -27,9 +27,9 @@ export const ReportItem = () => {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
         <div className="comic-panel bg-[var(--color-accent)] p-8 max-w-md mx-auto -rotate-2">
-          <ShieldCheck size={80} strokeWidth={3} className="text-black mx-auto mb-6" />
-          <h2 className="text-3xl font-black text-black mb-4 uppercase">Hold Up!</h2>
-          <p className="text-xl font-bold text-black/80 mb-8">You must be signed in with a valid .edu email to report items.</p>
+          <ShieldCheck size={80} strokeWidth={3} className="text-[var(--color-text)] mx-auto mb-6" />
+          <h2 className="text-3xl font-black text-[var(--color-text)] mb-4 uppercase">Hold Up!</h2>
+          <p className="text-xl font-bold text-[var(--color-text)]/80 mb-8">You must be signed in with a valid .edu email to report items.</p>
           <button 
             onClick={() => window.dispatchEvent(new Event('auth:unauthorized'))} 
             className="px-8 py-4 comic-button bg-[var(--color-primary)] text-white text-xl w-full"
@@ -94,26 +94,26 @@ export const ReportItem = () => {
         animate={{ opacity: 1, y: 0 }}
         className="max-w-2xl mx-auto text-center py-12"
       >
-        <div className="comic-panel bg-white p-10 rotate-1">
-          <div className="w-24 h-24 bg-[var(--color-primary)] rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-black shadow-[4px_4px_0_0_#000] -rotate-6">
+        <div className="comic-panel bg-[var(--color-surface)] p-10 rotate-1">
+          <div className="w-24 h-24 bg-[var(--color-primary)] rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-[var(--color-border)] shadow-[4px_4px_0_0_var(--color-shadow)] -rotate-6">
             <CheckCircle2 size={48} strokeWidth={3} className="text-white" />
           </div>
-          <h2 className="text-5xl font-black text-black mb-4 uppercase drop-shadow-[2px_2px_0_#fff]">Success!</h2>
-          <p className="text-2xl font-bold text-black/80 mb-8">
+          <h2 className="text-5xl font-black text-[var(--color-text)] mb-4 uppercase drop-shadow-[2px_2px_0_var(--color-shadow)]">Success!</h2>
+          <p className="text-2xl font-bold text-[var(--color-text)]/80 mb-8">
             Our Vision AI successfully processed the image and extracted the tags.
           </p>
 
           <div className="p-6 comic-panel bg-[var(--color-surface-hover)] text-left max-w-md mx-auto mb-10 -rotate-2">
-            <h3 className="text-2xl font-black text-black mb-6 flex items-center gap-3">
+            <h3 className="text-2xl font-black text-[var(--color-text)] mb-6 flex items-center gap-3">
               <Sparkles size={28} strokeWidth={3} className="text-[var(--color-primary)]" />
               AI Extracted Tags
             </h3>
             <div className="space-y-4">
               {Object.entries(success.tags).map(([key, val]) => (
                 val && val !== 'Unknown' && (
-                  <div key={key} className="flex justify-between items-center pb-3 border-b-4 border-black/10 last:border-0 font-bold text-lg">
-                    <span className="text-black/60 capitalize">{key}</span>
-                    <span className="text-black bg-white px-3 py-1 border-2 border-black rounded-lg shadow-[2px_2px_0_0_#000]">{val}</span>
+                  <div key={key} className="flex justify-between items-center pb-3 border-b-4 border-[var(--color-border)]/10 last:border-0 font-bold text-lg">
+                    <span className="text-[var(--color-text)]/60 capitalize">{key}</span>
+                    <span className="text-[var(--color-text)] bg-[var(--color-surface)] px-3 py-1 border-2 border-[var(--color-border)] rounded-lg shadow-[2px_2px_0_0_var(--color-shadow)]">{val}</span>
                   </div>
                 )
               ))}
@@ -122,7 +122,7 @@ export const ReportItem = () => {
 
           <button 
             onClick={() => navigate('/')}
-            className="px-8 py-4 comic-button bg-[var(--color-secondary)] text-black text-xl hover:bg-black hover:text-white"
+            className="px-8 py-4 comic-button bg-[var(--color-secondary)] text-[var(--color-text)] text-xl hover:bg-black hover:text-white"
           >
             Return to Feed
           </button>
@@ -133,20 +133,20 @@ export const ReportItem = () => {
 
   return (
     <div className="max-w-5xl mx-auto pb-12 relative">
-      <div className="mb-10 bg-[var(--color-primary)] border-4 border-black shadow-[6px_6px_0_0_#000] rounded-2xl p-8 rotate-1 transition-all hover:rotate-0">
-        <h1 className="text-4xl md:text-5xl font-black text-black mb-4 uppercase drop-shadow-[3px_3px_0_#fff]">Report an Item</h1>
-        <p className="text-xl font-bold text-black/90">Upload a photo and let our AI do the heavy lifting. We'll automatically identify the brand and category.</p>
+      <div className="mb-10 bg-[var(--color-primary)] border-4 border-[var(--color-border)] shadow-[6px_6px_0_0_var(--color-shadow)] rounded-2xl p-8 rotate-1 transition-all hover:rotate-0">
+        <h1 className="text-4xl md:text-5xl font-black text-[var(--color-text)] mb-4 uppercase drop-shadow-[3px_3px_0_var(--color-shadow)]">Report an Item</h1>
+        <p className="text-xl font-bold text-[var(--color-text)]/90">Upload a photo and let our AI do the heavy lifting. We'll automatically identify the brand and category.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-5 gap-8">
         {/* Left Column - Image */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-[var(--color-accent)] border-4 border-black shadow-[6px_6px_0_0_#000] rounded-2xl p-6 -rotate-1 h-full flex flex-col transition-all hover:rotate-0">
-            <h3 className="text-2xl font-black text-black mb-6 flex items-center gap-3">
-              <Sparkles size={28} strokeWidth={3} className="text-black" />
+          <div className="bg-[var(--color-accent)] border-4 border-[var(--color-border)] shadow-[6px_6px_0_0_var(--color-shadow)] rounded-2xl p-6 -rotate-1 h-full flex flex-col transition-all hover:rotate-0">
+            <h3 className="text-2xl font-black text-[var(--color-text)] mb-6 flex items-center gap-3">
+              <Sparkles size={28} strokeWidth={3} className="text-[var(--color-text)]" />
               Item Photo
             </h3>
-            <div className="flex-1 bg-white border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0_0_#000]">
+            <div className="flex-1 bg-[var(--color-surface)] border-4 border-[var(--color-border)] rounded-2xl p-4 shadow-[4px_4px_0_0_var(--color-shadow)]">
               <ImageDropzone file={file} setFile={setFile} />
             </div>
           </div>
@@ -158,17 +158,17 @@ export const ReportItem = () => {
             
             {/* Status Type */}
             <div>
-              <label className="block text-xl font-black text-black mb-4">Item Status</label>
+              <label className="block text-xl font-black text-[var(--color-text)] mb-4">Item Status</label>
               <div className="flex gap-4">
                 <label className="flex-1 relative cursor-pointer group">
                   <input type="radio" name="itemType" value="found" checked={itemType === 'found'} onChange={() => setItemType('found')} className="peer sr-only" />
-                  <div className="p-4 text-center rounded-2xl border-4 border-black bg-white peer-checked:bg-[var(--color-secondary)] peer-checked:-translate-y-1 peer-checked:shadow-[6px_6px_0_0_#000] text-black transition-all font-black text-lg group-hover:bg-[var(--color-surface-hover)] shadow-[2px_2px_0_0_#000]">
+                  <div className="p-4 text-center rounded-2xl border-4 border-[var(--color-border)] bg-[var(--color-surface)] peer-checked:bg-[var(--color-secondary)] peer-checked:-translate-y-1 peer-checked:shadow-[6px_6px_0_0_var(--color-shadow)] text-[var(--color-text)] transition-all font-black text-lg group-hover:bg-[var(--color-surface-hover)] shadow-[2px_2px_0_0_var(--color-shadow)]">
                     Found Something!
                   </div>
                 </label>
                 <label className="flex-1 relative cursor-pointer group">
                   <input type="radio" name="itemType" value="lost" checked={itemType === 'lost'} onChange={() => setItemType('lost')} className="peer sr-only" />
-                  <div className="p-4 text-center rounded-2xl border-4 border-black bg-white peer-checked:bg-[var(--color-primary)] peer-checked:text-white peer-checked:-translate-y-1 peer-checked:shadow-[6px_6px_0_0_#000] text-black transition-all font-black text-lg group-hover:bg-[var(--color-surface-hover)] shadow-[2px_2px_0_0_#000]">
+                  <div className="p-4 text-center rounded-2xl border-4 border-[var(--color-border)] bg-[var(--color-surface)] peer-checked:bg-[var(--color-primary)] peer-checked:text-white peer-checked:-translate-y-1 peer-checked:shadow-[6px_6px_0_0_var(--color-shadow)] text-[var(--color-text)] transition-all font-black text-lg group-hover:bg-[var(--color-surface-hover)] shadow-[2px_2px_0_0_var(--color-shadow)]">
                     Lost Something?
                   </div>
                 </label>
@@ -177,7 +177,7 @@ export const ReportItem = () => {
 
             {/* Title */}
             <div>
-              <label className="block text-xl font-black text-black mb-3">Short Title <span className="text-[var(--color-primary)]">*</span></label>
+              <label className="block text-xl font-black text-[var(--color-text)] mb-3">Short Title <span className="text-[var(--color-primary)]">*</span></label>
               <input 
                 type="text" 
                 value={title} 
@@ -190,7 +190,7 @@ export const ReportItem = () => {
 
             {/* Description */}
             <div>
-              <label className="block text-xl font-black text-black mb-3 flex items-center gap-2">
+              <label className="block text-xl font-black text-[var(--color-text)] mb-3 flex items-center gap-2">
                 <AlignLeft size={24} strokeWidth={3} /> Additional Details
               </label>
               <textarea 
@@ -203,14 +203,14 @@ export const ReportItem = () => {
             </div>
 
             {/* Location */}
-            <div className="space-y-6 pt-6 border-t-4 border-black border-dashed">
-              <h3 className="text-2xl font-black text-black flex items-center gap-3 bg-[var(--color-secondary)] p-3 rounded-xl border-4 border-black w-fit -rotate-2 shadow-[2px_2px_0_0_#000]">
+            <div className="space-y-6 pt-6 border-t-4 border-[var(--color-border)] border-dashed">
+              <h3 className="text-2xl font-black text-[var(--color-text)] flex items-center gap-3 bg-[var(--color-secondary)] p-3 rounded-xl border-4 border-[var(--color-border)] w-fit -rotate-2 shadow-[2px_2px_0_0_var(--color-shadow)]">
                 <MapPin size={24} strokeWidth={3} />
                 Location Information
               </h3>
               
               <div>
-                <label className="block text-xl font-black text-black mb-3">Location Name</label>
+                <label className="block text-xl font-black text-[var(--color-text)] mb-3">Location Name</label>
                 <input 
                   type="text" 
                   value={locationName} 
@@ -221,7 +221,7 @@ export const ReportItem = () => {
               </div>
 
               <div>
-                <label className="block text-xl font-black text-black mb-3">Pin on Map (Optional)</label>
+                <label className="block text-xl font-black text-[var(--color-text)] mb-3">Pin on Map (Optional)</label>
                 <LocationPicker location={location} setLocation={setLocation} />
               </div>
             </div>

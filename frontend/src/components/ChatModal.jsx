@@ -64,15 +64,15 @@ export const ChatModal = ({ isOpen, onClose, item }) => {
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-md h-[500px] flex flex-col overflow-hidden comic-panel bg-white rotate-1"
+            className="relative w-full max-w-md h-[500px] flex flex-col overflow-hidden comic-panel bg-[var(--color-surface)] rotate-1"
           >
             {/* Header */}
-            <div className="p-4 border-b-4 border-black flex items-center justify-between bg-[var(--color-primary)]">
+            <div className="p-4 border-b-4 border-[var(--color-border)] flex items-center justify-between bg-[var(--color-primary)]">
               <div className="flex items-center gap-2">
-                <MessageCircle size={24} strokeWidth={3} className="text-black" />
-                <h3 className="font-black text-black text-xl uppercase shadow-black drop-shadow-[2px_2px_0_#fff]">Chat: {item?.title}</h3>
+                <MessageCircle size={24} strokeWidth={3} className="text-[var(--color-text)]" />
+                <h3 className="font-black text-[var(--color-text)] text-xl uppercase shadow-black drop-shadow-[2px_2px_0_var(--color-shadow)]">Chat: {item?.title}</h3>
               </div>
-              <button onClick={onClose} className="p-2 text-black hover:text-white hover:bg-black transition-colors rounded-xl border-2 border-transparent hover:border-black">
+              <button onClick={onClose} className="p-2 text-[var(--color-text)] hover:text-white hover:bg-black transition-colors rounded-xl border-2 border-transparent hover:border-[var(--color-border)]">
                 <X size={24} strokeWidth={3} />
               </button>
             </div>
@@ -80,7 +80,7 @@ export const ChatModal = ({ isOpen, onClose, item }) => {
             {/* Messages Area */}
             <div className="flex-1 overflow-y-auto p-4 space-y-6 bg-[#f0f0f0]">
               {messages.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-black/40">
+                <div className="h-full flex flex-col items-center justify-center text-[var(--color-text)]/40">
                   <MessageCircle size={48} strokeWidth={2} className="mb-4" />
                   <p className="font-black text-lg">No messages yet. Say hello!</p>
                 </div>
@@ -89,8 +89,8 @@ export const ChatModal = ({ isOpen, onClose, item }) => {
                   const isMe = msg.sender === user?.name;
                   return (
                     <div key={idx} className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
-                      <span className="text-sm font-bold text-black/50 mb-1 px-1">{msg.sender}</span>
-                      <div className={`px-4 py-3 border-4 border-black shadow-[4px_4px_0_0_#000] max-w-[80%] font-bold text-black text-md ${isMe ? 'bg-[var(--color-secondary)] rounded-2xl rounded-tr-none' : 'bg-[var(--color-accent)] rounded-2xl rounded-tl-none'}`}>
+                      <span className="text-sm font-bold text-[var(--color-text)]/50 mb-1 px-1">{msg.sender}</span>
+                      <div className={`px-4 py-3 border-4 border-[var(--color-border)] shadow-[4px_4px_0_0_var(--color-shadow)] max-w-[80%] font-bold text-[var(--color-text)] text-md ${isMe ? 'bg-[var(--color-secondary)] rounded-2xl rounded-tr-none' : 'bg-[var(--color-accent)] rounded-2xl rounded-tl-none'}`}>
                         {msg.text}
                       </div>
                     </div>
@@ -101,13 +101,13 @@ export const ChatModal = ({ isOpen, onClose, item }) => {
             </div>
 
             {/* Input Area */}
-            <form onSubmit={sendMessage} className="p-4 border-t-4 border-black bg-white flex gap-3">
+            <form onSubmit={sendMessage} className="p-4 border-t-4 border-[var(--color-border)] bg-[var(--color-surface)] flex gap-3">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Type a message..."
-                className="flex-1 px-4 py-3 comic-input font-bold text-black"
+                className="flex-1 px-4 py-3 comic-input font-bold text-[var(--color-text)]"
               />
               <button 
                 type="submit"

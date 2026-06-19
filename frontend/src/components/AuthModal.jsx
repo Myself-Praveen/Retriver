@@ -46,16 +46,16 @@ export const AuthModal = ({ isOpen, onClose }) => {
           >
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 p-2 text-black hover:bg-black/10 transition-colors rounded-full border-2 border-transparent hover:border-black"
+              className="absolute top-4 right-4 p-2 text-[var(--color-text)] hover:bg-black/10 transition-colors rounded-full border-2 border-transparent hover:border-[var(--color-border)]"
             >
               <X size={24} strokeWidth={3} />
             </button>
 
             <div className="mb-8 text-center mt-2">
-              <h2 className="text-3xl font-black text-black mb-2 uppercase tracking-wide">
+              <h2 className="text-3xl font-black text-[var(--color-text)] mb-2 uppercase tracking-wide">
                 {isLogin ? 'Welcome Back!' : 'Join Retriever!'}
               </h2>
-              <p className="text-black/70 font-bold">
+              <p className="text-[var(--color-text)]/70 font-bold">
                 {isLogin 
                   ? 'Sign in to report or claim lost items.' 
                   : 'Use your .edu email to verify your campus identity.'}
@@ -66,7 +66,7 @@ export const AuthModal = ({ isOpen, onClose }) => {
               <motion.div 
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
-                className="flex items-center gap-2 p-3 mb-6 text-sm font-bold text-black bg-[var(--color-primary)] border-4 border-black rounded-xl shadow-[2px_2px_0_0_#000]"
+                className="flex items-center gap-2 p-3 mb-6 text-sm font-bold text-[var(--color-text)] bg-[var(--color-primary)] border-4 border-[var(--color-border)] rounded-xl shadow-[2px_2px_0_0_var(--color-shadow)]"
               >
                 <AlertCircle size={20} strokeWidth={3} className="shrink-0" />
                 <p>{error}</p>
@@ -76,7 +76,7 @@ export const AuthModal = ({ isOpen, onClose }) => {
             <form onSubmit={handleSubmit} className="space-y-4">
               {!isLogin && (
                 <div className="relative">
-                  <User size={20} strokeWidth={3} className="absolute left-4 top-1/2 -translate-y-1/2 text-black" />
+                  <User size={20} strokeWidth={3} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-text)]" />
                   <input
                     type="text"
                     placeholder="Full Name"
@@ -89,7 +89,7 @@ export const AuthModal = ({ isOpen, onClose }) => {
               )}
               
               <div className="relative">
-                <Mail size={20} strokeWidth={3} className="absolute left-4 top-1/2 -translate-y-1/2 text-black" />
+                <Mail size={20} strokeWidth={3} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-text)]" />
                 <input
                   type="email"
                   placeholder="College Email (.edu)"
@@ -101,7 +101,7 @@ export const AuthModal = ({ isOpen, onClose }) => {
               </div>
 
               <div className="relative">
-                <Lock size={20} strokeWidth={3} className="absolute left-4 top-1/2 -translate-y-1/2 text-black" />
+                <Lock size={20} strokeWidth={3} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-text)]" />
                 <input
                   type="password"
                   placeholder="Password"
@@ -122,7 +122,7 @@ export const AuthModal = ({ isOpen, onClose }) => {
                   <motion.div
                     animate={{ rotate: 360 }}
                     transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-                    className="w-6 h-6 border-4 border-black/30 border-t-black rounded-full mx-auto"
+                    className="w-6 h-6 border-4 border-[var(--color-border)]/30 border-t-black rounded-full mx-auto"
                   />
                 ) : (
                   isLogin ? "LET'S GO!" : 'CREATE ACCOUNT!'
@@ -137,7 +137,7 @@ export const AuthModal = ({ isOpen, onClose }) => {
                   setIsLogin(!isLogin);
                   setError('');
                 }}
-                className="text-black font-bold hover:underline decoration-4 underline-offset-4 transition-all"
+                className="text-[var(--color-text)] font-bold hover:underline decoration-4 underline-offset-4 transition-all"
               >
                 {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
               </button>

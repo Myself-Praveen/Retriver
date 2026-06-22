@@ -27,9 +27,7 @@ export const Layout = () => {
               {/* Pop decoration */}
               <Star size={24} strokeWidth={3} fill="white" className="absolute -top-3 -left-3 text-[var(--color-text)] z-10 opacity-0 group-hover:opacity-100 transition-opacity rotate-12" />
               
-              <div className="w-14 h-14 rounded-full bg-[var(--color-secondary)] border-4 border-[var(--color-border)] flex items-center justify-center font-black text-[var(--color-text)] text-3xl shadow-[4px_4px_0_0_var(--color-shadow)] group-hover:-translate-y-1 group-hover:shadow-[6px_6px_0_0_var(--color-shadow)] transition-all -rotate-6">
-                R
-              </div>
+              <img src="/logo.png" alt="Retriever Logo" className="w-14 h-14 rounded-full border-4 border-[var(--color-border)] object-cover bg-white shadow-[4px_4px_0_0_var(--color-shadow)] group-hover:-translate-y-1 group-hover:shadow-[6px_6px_0_0_var(--color-shadow)] transition-all -rotate-6" />
               <div className="relative">
                 <span className="font-heading font-black text-4xl tracking-tight text-[var(--color-text)] drop-shadow-[3px_3px_0_var(--color-shadow)]">Retriever</span>
                 <span className="absolute -bottom-2 -right-6 bg-[var(--color-primary)] text-white text-[10px] font-black px-2 py-0.5 border-2 border-[var(--color-border)] rounded-lg shadow-[2px_2px_0_0_var(--color-shadow)] rotate-12">
